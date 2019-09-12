@@ -119,4 +119,4 @@ Build version 4.4.1 on Ubuntu
 ## duckdns _[DuckDNS Updater Client]_
 A linux container to update your Dynamic DNS with [DuckDNS](www.duckdns.org).
 
-Refer to the [readme](.\duckdns\README.md) file in the folder for further details.
+Refer to the [readme](duckdns/README.md) file in the folder for further details.

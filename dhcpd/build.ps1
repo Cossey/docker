@@ -26,20 +26,20 @@ switch ($ver) {
     "all" {  
         foreach($vers in $versions) {
             if ($versions[$versions.Count-1][0] -eq $vers[0]) {
-                docker buildx build --build-arg PLAT=$plat --build-arg VER=$($vers[1]) --platform $($vers[2]) -t ${tag}:$($vers[0]) -t ${tag}:latest . --push
+                docker buildx build --no-cache --build-arg PLAT=$plat --build-arg VER=$($vers[1]) --platform $($vers[2]) -t ${tag}:$($vers[0]) -t ${tag}:latest . --push
             } else {
-                docker buildx build --build-arg PLAT=$plat --build-arg VER=$($vers[1]) --platform $($vers[2]) -t ${tag}:$($vers[0]) . --push
+                docker buildx build --no-cache --build-arg PLAT=$plat --build-arg VER=$($vers[1]) --platform $($vers[2]) -t ${tag}:$($vers[0]) . --push
             }
         }
     }
     "latest" {
         $latest = $versions[$versions.Count-1]
-        docker buildx build --build-arg PLAT=$plat --build-arg VER=$($latest[1]) --platform $($latest[2]) -t ${tag}:$($latest[0]) -t ${tag}:latest . --push
+        docker buildx build --no-cache --build-arg PLAT=$plat --build-arg VER=$($latest[1]) --platform $($latest[2]) -t ${tag}:$($latest[0]) -t ${tag}:latest . --push
     }
     Default {
         foreach ($vers in $versions) { 
             if ($ver -eq $vers[0]) {
-                docker buildx build --build-arg PLAT=$plat --build-arg VER=$($vers[1]) --platform $($vers[2]) -t ${tag}:$($vers[0]) . --push 
+                docker buildx build --no-cache --build-arg PLAT=$plat --build-arg VER=$($vers[1]) --platform $($vers[2]) -t ${tag}:$($vers[0]) . --push 
             }
         }
     }

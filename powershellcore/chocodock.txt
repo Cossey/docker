@@ -1,0 +1,12 @@
+libmono-microsoft-csharp4.0-cil
+
+libmono-system-componentmodel-dataannotations4.0-cil
+libmono-system-xml-linq4.0-cil
+libmono-windowsbase4.0-cil
+
+
+libmono-system-configuration-install4.0-cil
+libmono-system-xml-serialization4.0-cil
+
+libmono-system-security4.0-cil
+libmono-system-transactions4.0-cilexit

@@ -1,7 +1,7 @@
 # Docker Hub
 Dockerfiles and scripts for my Images hosted at https://hub.docker.com/u/kosdk
 
-You can build the images using the `build.ps1` powershell script in each folder to build the respective images. Check the sections below for any parameters that you can pass to the builder.
+You can build most of the images using the `build.ps1` powershell script in each folder to build the respective images. Check the sections below for any parameters that you can pass to the builder.
 
 The PowerShell build scripts have a `$tag` variable that you can edit so you can customize the image tag name for your repsitory.
 
@@ -35,3 +35,8 @@ Refer to the [readme](fileupdater/README.md) file in the folder for further deta
 A linux container to update your Dynamic DNS with [DuckDNS](www.duckdns.org).
 
 Refer to the [readme](duckdns/README.md) file in the folder for further details.
+
+## Docker in Docker with Powershell
+A *amd64 only* container built from the official Docker container that includes Powershell Core.
+
+Refer to the [readme](dockerpwsh/README.md) file in the folder for further details.

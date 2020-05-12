@@ -5,7 +5,7 @@ LABEL maintainer="stewart.cossey@gmail.com"
 RUN apt-get update && apt-get install -y git wget
 
 WORKDIR /usr/local/src
-RUN git clone https://github.com/TheCakeIsNaOH/choco.git -b MonoFixV2
+RUN git clone https://github.com/chocolatey/choco.git -b stable
 
 WORKDIR /usr/local/src/choco
 RUN chmod +x build.sh && chmod +x zip.sh && ./build.sh

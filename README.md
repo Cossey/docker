@@ -9,6 +9,11 @@ The PowerShell build scripts have a `$tag` variable that you can edit so you can
 
 **All these packages support multiple linux architectures including the Raspberry Pi. _You're welcome!_**
 
+## Web Service Discovery host daemon **_/wsdd_**
+Allows legacy samba shares to be discovered by Windows 10 version 1511 and higher. Useful when hosting samba in docker. Runs on Python 3.
+
+Refer to the [readme](wsdd/README.md) file in the folder for further details.
+
 ## Chocolatey Package Manager **_/choco_**
 Supports building packages and pushing them to a Chocolatey Registry in a Linux Container. 
 

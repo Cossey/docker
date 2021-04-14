@@ -3,7 +3,7 @@ Dockerfiles and scripts for my Images hosted at https://hub.docker.com/u/kosdk
 
 You can build most of the images using the `build.ps1` powershell script in each folder to build the respective images. Check the sections below for any parameters that you can pass to the builder.
 
-The PowerShell build scripts have a `$tag` variable that you can edit so you can customize the image tag name for your repsitory.
+The PowerShell build scripts have a `$tag` variable that you can edit so you can customize the image tag name for your repsitory. There is also a environment variable called `DOCKER_HUB_PROFILE` which contains the profile repository that these images are hosted on. The `DOCKER_HUB_PROFILE` must be set before using the `build.ps1` scripts.
 
 > These build scripts use the experimental `buildx` command in _Docker Desktop 2.0.4.0 or higher_ to build for multiple Linux platforms. You need to enable experimental features. Read more about [this command here](https://docs.docker.com/buildx/working-with-buildx/).
 

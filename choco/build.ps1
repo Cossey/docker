@@ -1,7 +1,7 @@
 $ver = $args[0]
 $psver = $args[1]
 $buildtype = $args[2]
-$tag = "kosdk/choco"
+$tag = "${DOCKER_HUB_PROFILE}/choco"
 
 if ($buildtype -ne "ignorecore") {
     docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64,linux/arm/v6,linux/386 -t ${tag}:${ver} -t ${tag}:latest . --push

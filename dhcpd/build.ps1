@@ -1,6 +1,6 @@
 $ver = $args[0]
 $platform = $args[1]
-$tag = "${DOCKER_HUB_PROFILE}/dhcpd"
+$tag = "${env:DOCKER_HUB_PROFILE}/dhcpd"
 
 $ubuntu = @("4.3.3", "16.04", "linux/arm/v7,linux/arm64,linux/386,linux/amd64,linux/ppc64le,linux/s390x"), 
         @("4.3.5", "18.04", "linux/arm/v7,linux/arm64,linux/386,linux/amd64,linux/ppc64le,linux/s390x"), 

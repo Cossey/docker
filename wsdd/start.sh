@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 params=""
 
 if [ -n "$HOST_NAME" ]; then
@@ -6,7 +6,7 @@ if [ -n "$HOST_NAME" ]; then
         echo "Invalid host name!"
         exit 10
     else
-        params+="-h ${HOST_NAME} "
+        params+="-n ${HOST_NAME} "
     fi
 fi
 
@@ -70,4 +70,5 @@ if [ -n "$UUID" ]; then
     fi
 fi
 
-python3 wsdd.py -v $params
+echo "Running WSDD..."
+python3 ./wsdd.py -v $params

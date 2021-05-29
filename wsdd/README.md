@@ -4,11 +4,15 @@ Web Service Discovery host daemon is a script maintained at [christgau/wsdd](htt
 
 ## Dockerfile Details
 
-`ENTRYPOINT` launches shell script `start.sh` that then passes script parameters via environment variables to the python script. Uses alpine image, and APKs python3. Copies the files over and `chmod`s the shell script.
+`ENTRYPOINT` launches shell script `start.sh` that then passes script parameters via environment variables to the python script. Uses the alpine base image.
+
+The `HEALTHCHECK` checks to see if the wsdd.py process is running.
 
 ## Building
 
-The `build.ps1` powershell script builds the image for amd64, arm and arm64 using `buildx`. It will also check the `wsdd.py` file for the current version number and use that for the tag as well as `latest`.
+The `build.ps1` powershell script builds the image for amd64, arm and arm64 using `buildx`. It will also check the `wsdd.py` file for the current version number and use that for the tag as well as `latest`. The environment variable `DOCKER_HUB_PROFILE` must be set before you can build using the powershell script as this specifies the docker hub profile to build the image for.
+
+> The latest version of `wsdd.py` can be downloaded from the [github release page](https://github.com/christgau/wsdd/releases).
 
 ## Usage
 

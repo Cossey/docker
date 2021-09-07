@@ -46,6 +46,20 @@ docker run -d \
 kosdk/megacmd
 ```
 
+## Session IDs
+
+It is recommended to use the `SESSION_FILE` environment variable to read a session secret from docker secrets/file instead of exposing your username and password.
+
+To generate a session id, you can run the container with following:
+```
+docker run --rm \
+-e USERNAME=<yourusername> \
+-e PASSWORD=<yourpassword> \
+-e MEGACMD="session" \
+kosdk/megacmd
+```
+You will see the session secret in the output.
+
 ## Building this Image
 
 The environment variable `DOCKER_HUB_PROFILE` must be set before you can build using the powershell script as this specifies the docker hub profile to build the image for.

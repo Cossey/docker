@@ -31,6 +31,11 @@ The ISC DHCP Server running in a Docker Container.
 
 Refer to the [readme](dhcpd/README.md) file in the folder for further details.
 
+## Mega.nz megacmd **_/megacmd_**
+megacmd with some convenience functions to help with backing up files.
+
+Refer to the [readme](megacmd/README.md) file in the folder for further details.
+
 ## File Updater **_/fileupdater_**
 A linux container with a script to update files at set intervals.
 

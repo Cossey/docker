@@ -4,6 +4,6 @@ LABEL maintainer="stewart.cossey@gmail.com"
 
 RUN apk add --no-cache bash curl
 
-COPY update.sh /update.sh
+COPY *.sh /
 
 CMD /bin/bash /update.sh

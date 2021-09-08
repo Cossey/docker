@@ -8,7 +8,8 @@ $ubuntu = @("4.3.3", "16.04", "linux/arm/v7,linux/arm64,linux/386,linux/amd64,li
 
 $debian = @("4.3.1", "jessie-slim", "linux/arm/v6,linux/arm/v7,linux/386,linux/amd64"),
         @("4.3.5", "stretch-slim", "linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/amd64,linux/ppc64le,linux/s390x"),
-        @("4.4.1", "buster-slim", "linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/amd64,linux/ppc64le,linux/s390x")
+        @("4.4.1", "buster-slim", "linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/amd64,linux/ppc64le,linux/s390x"),
+        @("4.4.1-2.3", "bullseye-slim", "linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/amd64,linux/ppc64le,linux/s390x,linux/mips64le")
 
 $versions = $debian
 $plat = "debian"

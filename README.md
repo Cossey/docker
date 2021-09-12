@@ -37,16 +37,16 @@ megacmd with some convenience functions to help with backing up files.
 Refer to the [readme](megacmd/README.md) file in the folder for further details.
 
 ## File Updater **_/fileupdater_**
-A linux container with a script to update files at set intervals.
+A linux container with a script to update files at set intervals with support for many platforms.
 
 Refer to the [readme](fileupdater/README.md) file in the folder for further details.
 
 ## DuckDNS Updater Client **_/duckdns_**
-A linux container to update your Dynamic DNS with [DuckDNS](www.duckdns.org).
+A linux container to update your Dynamic DNS with [DuckDNS](www.duckdns.org) with support for many platforms.
 
 Refer to the [readme](duckdns/README.md) file in the folder for further details.
 
-## Docker in Docker with Powershell
+## Docker in Docker with Powershell **_/dockerpwsh_**
 A *amd64 only* container built from the official Docker container that includes Powershell Core.
 
 Refer to the [readme](dockerpwsh/README.md) file in the folder for further details.

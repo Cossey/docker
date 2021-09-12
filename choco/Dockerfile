@@ -1,11 +1,12 @@
 FROM mono:latest as builder
+ARG CVER
 
 LABEL maintainer="stewart.cossey@gmail.com"
 
 RUN apt-get update && apt-get install -y git wget
 
 WORKDIR /usr/local/src
-RUN git clone https://github.com/chocolatey/choco.git -b stable
+RUN git clone https://github.com/chocolatey/choco.git --depth 1 -b $CVER 
 
 WORKDIR /usr/local/src/choco
 RUN chmod +x build.sh && chmod +x zip.sh && ./build.sh

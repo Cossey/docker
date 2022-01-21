@@ -51,11 +51,13 @@ var srv = http.createServer(function (req, res) {
                     var fullLocation = location + "/" + file;
                     if (fs.existsSync(fullLocation)) {
                         var params = [];
-                        if (volume != null && isNaN(volume) == false) {
-                            params = ["-v", volume];
+                        if (volume != null && !isNaN(volume)) {
+                            params = ["vol", volume.toString()];
+                            info = " | Vol " + volume;
                         }
-                        player = new AudioPlayer({ file: fullLocation, args: args });
-                        console.log(remoteIP + ": Play " + file);
+                        player = new AudioPlayer({ file: fullLocation, args: params });
+                        
+                        console.log(remoteIP + ": Play " + file + info);
                         player.play();
                         res.writeHead(202);
                     } else {

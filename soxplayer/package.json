@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "sox-play": "^0.0.2"
+    "sox-play": "github:PixnBits/sox-play"
   }
 }

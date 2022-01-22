@@ -11,7 +11,7 @@ Designed for use in playing pre-recorded audio notifications for home automation
 
 # API
 
-You can view the [API documentation here](/APIDOCS.md).
+You can view the [API documentation here](/soxplayer/APIDOCS.md).
 
 # Setup
 

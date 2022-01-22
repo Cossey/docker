@@ -1,52 +1,73 @@
 # Docker Hub
 Dockerfiles and scripts for my Images hosted at https://hub.docker.com/u/kosdk
 
-You can build most of the images using the `build.ps1` powershell script in each folder to build the respective images. Check the sections below for any parameters that you can pass to the builder.
+You can build most of the images using the `build.ps1` powershell script in each folder to build the respective images.
+Check the sections below for any parameters that you can pass to the builder.
 
-The PowerShell build scripts have a `$tag` variable that you can edit so you can customize the image tag name for your repsitory. There is also a environment variable called `DOCKER_HUB_PROFILE` which contains the profile repository that these images are hosted on. The `DOCKER_HUB_PROFILE` must be set before using the `build.ps1` scripts.
+The PowerShell build scripts have a `$tag` variable that you can edit so you can customize the image tag name for your repsitory.
+There is also a environment variable called `DOCKER_HUB_PROFILE` which contains the profile repository that these images are hosted on.
+The `DOCKER_HUB_PROFILE` must be set before using the `build.ps1` scripts.
 
-> These build scripts use the experimental `buildx` command in _Docker Desktop 2.0.4.0 or higher_ to build for multiple Linux platforms. You need to enable experimental features. Read more about [this command here](https://docs.docker.com/buildx/working-with-buildx/).
+> These build scripts use the experimental `buildx` command in _Docker Desktop 2.0.4.0 or higher_ to build for multiple Linux platforms.
+You need to enable experimental features.
+Read more about [this command here](https://docs.docker.com/buildx/working-with-buildx/).
 
-**All these packages support multiple linux architectures including the Raspberry Pi. _You're welcome!_**
+**All these packages support multiple linux architectures including the Raspberry Pi.
+_You're welcome!_**
 
-## Web Service Discovery host daemon **_/wsdd_**
-Allows legacy samba shares to be discovered by Windows 10 version 1511 and higher. Useful when hosting samba in docker. Runs on Python 3.
+# Building Images 
 
-Refer to the [readme](wsdd/README.md) file in the folder for further details.
+The unified build tool is located in the repository root.
+In a powershell type `.\build <folder>` to build the image.
+Check the readme for each image to see if there are any additional parameters to pass to build tool.
 
-## Chocolatey Package Manager **_/choco_**
+# Images
+
+## [Web Service Discovery host daemon](wsdd/)
+[Readme](wsdd/README.md)
+
+Allows legacy samba shares to be discovered by Windows 10 version 1511 and higher.
+Useful when hosting samba in docker. 
+Runs on Python 3.
+
+## [Chocolatey Package Manager](choco/)
+[Readme](choco/README.md)
+
 Supports building packages and pushing them to a Chocolatey Registry in a Linux Container. 
 
 > This image only supports the `choco pack`, `choco new` and `choco push` commands.
 
-Refer to the [readme](choco/README.md) file in the folder for further details.
+## [PowerShell Core](powershellcore/)
+[Readme](powershellcore/README.md)
 
-## PowerShell Core **_/powershellcore_**
 Run PowerShell Core in a Linux Container.
 
-Refer to the [readme](powershellcore/README.md) file in the folder for further details.
+## [ISC DHCP Server](dhcpd/)
+[Readme](dhcpd/README.md)
 
-## ISC DHCP Server **_/dhcpd_**
 The ISC DHCP Server running in a Docker Container.
 
-Refer to the [readme](dhcpd/README.md) file in the folder for further details.
+## [Mega.nz megacmd](megacmd/)
+[Readme](megacmd/README.md)
 
-## Mega.nz megacmd **_/megacmd_**
 megacmd with some convenience functions to help with backing up files.
 
-Refer to the [readme](megacmd/README.md) file in the folder for further details.
+## [Sox Player](soxplayer/)
+[Readme](soxplayer/README.md) | [BSD 3-Clause](soxplayer/LICENCE)
 
-## File Updater **_/fileupdater_**
+Runs sox player in a container with a simple HTTP web API to play/stop audio on demand.
+
+## [File Updater](fileupdater/)
+[Readme](fileupdater/README.md) | [BSD 3-Clause](fileupdater/LICENCE)
+
 A linux container with a script to update files at set intervals with support for many platforms.
 
-Refer to the [readme](fileupdater/README.md) file in the folder for further details.
+## [DuckDNS Updater Client](duckdns/)
+[Readme](duckdns/README.md)
 
-## DuckDNS Updater Client **_/duckdns_**
 A linux container to update your Dynamic DNS with [DuckDNS](www.duckdns.org) with support for many platforms.
 
-Refer to the [readme](duckdns/README.md) file in the folder for further details.
+## [Docker in Docker with Powershell](dockerpwsh/)
+[Readme](dockerpwsh/README.md)
 
-## Docker in Docker with Powershell **_/dockerpwsh_**
 A *amd64 only* container built from the official Docker container that includes Powershell Core.
-
-Refer to the [readme](dockerpwsh/README.md) file in the folder for further details.

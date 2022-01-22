@@ -1,77 +1,87 @@
 #!/bin/bash 
 
-if [ -z "$TOKEN" ]
-then
-	echo "No TOKEN was set."
-	exit 20
-fi
+# DuckDNS API Updater
+# Copyright © 2022 Stewart Cossey
+# Version: 1.1
 
+. ./library.sh
 
-if [ -z "$DOMAINS" ]
-then
-	echo "No domains set."
-	exit 30
-fi
+file_env "TOKEN"
+file_env "DOMAINS"
+file_env "INTERVAL"
+file_env "IP"
+file_env "IP6"
 
-
-if [ -n "$DETECTIP" ]
-then
-	IP=$(wget -qO- "http://myexternalip.com/raw")
-fi
-
-
-if [ -n "$DETECTIP" ] && [ -z $IP ]
-then
-	RESULT="Could not detect external IP."
-fi
-
-
-if [[ $INTERVAL != [0-9]* ]]
-then
-	echo "Interval is not an integer."
-	exit 35
-fi
-
-USERAGENT="--user-agent=\"shell script/1.0 mail@mail.com\""
-
-DDNSURL="https://www.duckdns.org/update?"
+validate_env "TOKEN" "req"
+validate_env "DOMAINS" "req"
+validate_env "INTERVAL" "int"
+validate_env "IP" "ip4"
 
 if [ -n "$DOMAINS" ]
 then
 	DDNSURL="${DDNSURL}domains=${DOMAINS}&"
 fi
 
-DDNSURL="${DDNSURL}token=$TOKEN&"
+USERAGENT="--user-agent=\"duckdns shell script/1.1 mail@mail.com\""
+IP6DETECTURL="http://ip6only.me/api/"
+DDNSURL="https://www.duckdns.org/update?"
+DDNSURL="${DDNSURL}token=$TOKEN&domains=$DOMAINS&"
 
-echo "Started $(date)"
-echo "Update interval ${INTERVAL}m"
+log "Started"
+
+if [ -n "$INTERVAL" ] && [ "$INTERVAL" -ne 0 ]
+then
+	log "Update interval ${INTERVAL}m"
+fi
 
 while :
 do
-	
-	if [ -n "$DETECTIP" ]
-	then
-		IP=$(wget -qO- "http://myexternalip.com/raw")
-	fi
-	if [ -n "$DETECTIP" ] && [ -z $IP ]
-	then
-		RESULT="Could not detect external IP."
-	fi
-	
+
+	IPANDURL="$DDNSURL"
+
 	if [ -n "$IP" ]
 	then
-		IPANDURL="${DDNSURL}ip=$IP&"
+		IPANDURL="${IPANDURL}ip=$IP&"
 	fi
-	
+
+	if [ -n "$IP6" ]
+	then
+		IPANDURL="${IPANDURL}ipv6=$IP6&"
+	else
+		# Get IPv6
+		AUTOIP6=$(wget -T 5 -t 2 -qO- $USERAGENT $IP6DETECTURL)
+
+		if [ -n "$AUTOIP6" ]
+		then
+			readarray -d ',' -t <<<$AUTOIP6
+			IPANDURL="${IPANDURL}ipv6=${MAPFILE[1]}&"
+		else
+			log "Cannot get IPv6 address"
+		fi
+	fi
+
+	IPANDURL="${IPANDURL}verbose=true&"
 	IPANDURL=${IPANDURL%?}
 
-	RESULT=$(wget --no-check-certificate -qO- $USERAGENT $IPANDURL)
 
-	 
-	echo "$(date): $RESULT"
-	
+	WGETRESULT=$(wget -t 2 -qO- $USERAGENT $IPANDURL)
 
-	if [ $INTERVAL -eq 0 ]
+	readarray -t <<<$WGETRESULT
+
+	if [ "${MAPFILE[0]}" == "OK" ]
+	then
+		if [ "${MAPFILE[3]}" == "NOCHANGE" ]
+		then
+			log "No change to IP address"
+		else
+			log "IP address updated"
+		fi
+	else
+		log "Error updating, check settings"
+		exit 1
+	fi
+
+	if [ -z "$INTERVAL" ] || [ "$INTERVAL" -eq 0 ]
 	then
 		break
 	else

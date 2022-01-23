@@ -1,32 +1,78 @@
-$image = $args[0]
-$type = $args[1]
+param (
+    [Parameter(Mandatory=$true)][string]$image,
+    [string]$version,
+    [string]$output = "push",
+    [string]$outputpath
+)
+    
 $tag = "${env:DOCKER_HUB_PROFILE}/$image"
 
-$allalpineplatforms = "linux/arm/v6,linux/arm/v7,linux/arm64,linux/386,linux/amd64,linux/s390x,linux/ppc64le"
-
-function fetchVersion ($file) {
-    (Get-Content $file | Select-String -Pattern 'Version: ([0-9]+\.[0-9]+)').Matches[0].Groups[1].Value
+Switch ($output.ToLower()) {
+    "push" {}
+    "load" {break}
+    "folder" {
+        if (!$outputpath) {
+            Write-Error "Required parameter outputpath is missing"
+            exit 2
+        }
+    }
+    default {
+        Write-Error "Invalid output type"
+        exit 1
+    }
 }
 
-function buildx ($tagver, $df, $p) {
-    Switch ($type) {
+function BuildX () {
+    $df = Join-Path -Path $image -ChildPath $DOCKERFILE
+    Write-Host "Building ${tag}:$tagver at $df"
+    Switch ($output) {
         "load" {
             docker buildx build -t ${tag}:$tagver -t ${tag}:latest -f $df . --load
         }
         "push" {
-            docker buildx build --platform $p -t ${tag}:$tagver -t ${tag}:latest -f $df . --push
+            docker buildx build --platform $PLATFORM -t ${tag}:$tagver -t ${tag}:latest -f $df . --push
+        }
+        "folder" {
+            docker buildx build --platform $PLATFORM -t ${tag}:$tagver -t ${tag}:latest -f $df . --output type=local,dest=$outputpath
+        }
+        default {
+            Write-Error "Unknown output: $output"
         }
     }
-
 }
 
-Switch ($image)
-{
-    "duckdns" {
-        buildx "$(fetchVersion "duckdns/duckdns.sh")" "duckdns/Dockerfile" $allalpineplatforms
-        break
+function ParseVersion() {
+    if ($version) {
+        $script:tagver = $version
+    } else {
+        if ($VERSIONFILE && $VERSIONREGEX) {
+            $vf = Join-Path -Path $image -ChildPath $VERSIONFILE
+            $script:tagver = (Get-Content $vf | Select-String -Pattern $VERSIONREGEX).Matches[0].Groups[1].Value
+        } else {
+            Write-Error "The version parameter is required for this image"
+        }
     }
-    default {
-        Write-Host "Unknown image: $image"
+}
+
+function LoadEnvVarFile($path) {
+    Get-Content $path | % {
+        if ($_ -match '^\s*#') {
+            # skip comments
+        } elseif ($_ -match '^\s*$') {
+            # skip empty lines
+        } else {
+            $parts = $_.Split('=')
+            $name = $parts[0]
+            $value = $parts[1]
+            Set-Variable -Name $name -Value $value -Scope global
+        }
     }
+}
+
+if (Test-Path "./$image") {
+    LoadEnvVarFile "./$image/build.env"
+    ParseVersion
+    BuildX
+} else {
+    Write-Error "Folder not found: $image"
 }

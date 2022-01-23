@@ -8,8 +8,8 @@ RUN apk --no-cache --no-progress upgrade && \
     apk --no-cache --no-progress add python3 bash && \
     rm -rf /tmp/*
 
-ADD wsdd.py /
-ADD start.sh /
+ADD /wsdd/wsdd.py /
+ADD /wsdd/start.sh /
 
 RUN chmod +x ./start.sh
 

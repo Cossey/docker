@@ -1,3 +1,7 @@
+# File Updater
+# Copyright © 2022 Stewart Cossey
+# Version: 1.3
+
 . ./library.sh
 
 file_env "INTERVAL" 0
@@ -11,15 +15,15 @@ file_env "BEGIN" dfmt=%H%M
 validate_env "URL1" req
 validate_env "IGNORESSL" bool
 
-echo "Output path: $OUTPUTPATH"
+log "Output path is $OUTPUTPATH"
 
 CPARA=""
 if [ "$IGNORESSL" = "true" ]; then
 	CPARA=(-k)
-	echo "Ignore invalid SSL certificates"
+	log "Ignore invalid SSL certificates"
 else
 	if [ -n "$CACERT" ]; then
-		echo "Use certificate authority ${CACERT}"
+		log "Use certificate authority ${CACERT}"
 		CPARA=(--cacert ${CACERT})
 	fi
 fi
@@ -30,37 +34,43 @@ fi
 cd $OUTPUTPATH
 
 if [ -z "$BEGIN" ]; then
-  echo "Waiting to begin, Start at $BEGIN, currently $(date +"%H%M")"
+  log "Waiting to begin, Start at $BEGIN"
   while [ "$(date +"%H%M")" != "$BEGIN" ]; do
     sleep "5s"
   done
 fi
-echo "--------------------"
+log "-----------------------------------"
 while :; do
-	echo "$(date)"
+	
+	time {
+		TIMEFORMAT=$(log "Completed in %R seconds")
+		c=1
+		while :; do
+			URLVAL=URL$c
+			NAMEVAL=NAME$c
+			file_env $URLVAL
+			file_env $NAMEVAL
 
-	c=1
-	while :; do
-		URLVAL=URL$c
-		NAMEVAL=NAME$c
-		file_env $URLVAL
-		file_env $NAMEVAL
+			if [ -z "${!URLVAL}" ]; then
+				break
+			fi
 
-		if [ -z "${!URLVAL}" ]; then
-			break
-		fi
+			log "Download ${!URLVAL}"
+			time {
+				if [ -z "${!NAMEVAL}" ]; then
+					curl -sS ${CPARA[@]} "${!URLVAL}" --remote-name
+				else
+					curl -sS ${CPARA[@]} "${!URLVAL}" --output ${!NAMEVAL}
+				fi
+			}
 
-		echo "Download ${!URLVAL}"
-		if [ -z "${!NAMEVAL}" ]; then
-			curl -sS ${CPARA[@]} "${!URLVAL}" --remote-name
-		else
-			curl -sS ${CPARA[@]} "${!URLVAL}" --output ${!NAMEVAL}
-		fi
+			((c++))
+		done
+		log "-----------------------------------"
+		TIMEFORMAT=$(log "Cycle took %R seconds to complete")
+	}
 
-		((c++))
-	done
-
-	echo "--------------------"
+	log "-----------------------------------"
 	if [ $INTERVAL -eq 0 ]; then
 		break
 	else

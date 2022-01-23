@@ -6,7 +6,8 @@ RUN apk update \
     && apk add --no-cache sox nodejs npm
 
 WORKDIR /app
-COPY ./ ./
+COPY ./soxplayer/*.js ./
+COPY ./soxplayer/package*.json ./
 
 RUN npm i
 

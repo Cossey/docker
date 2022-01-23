@@ -10,6 +10,7 @@ You might get throttled if your interval is set too low.
 A failure message will appear if your connection does not support IPv6 but the container will continue to update any domains IPv4 address.
 
 ## Supported Platforms
+
 * linux/arm/v6
 * linux/arm/v7
 * linux/arm64
@@ -19,6 +20,7 @@ A failure message will appear if your connection does not support IPv6 but the c
 * linux/ppc64le
 
 ## Container Configuration
+
 There are 5 environment variables for configuration.
 **Bold** items are required.
 
@@ -33,13 +35,13 @@ There are 5 environment variables for configuration.
 > You can suffix `_FILE` to all the environment variable names above to read these values from a file (secrets).
 
 * If the `INTERVAL` is not set or set to `0` the container will stop when it has updated the IP address.
-* The IPv4 and IPv6 will be autodetected unless specified.
+* The IPv4 and IPv6 will be auto-detected unless specified.
 * The Domain list does not require the `.duckdns.org` part of the domain.
 
 ## Building this Image
 
-Use the unified build tool.
-There are no parameters to configure.
+Use the [unified build tool](/README.md#building-images).
+There are no additional parameters to configure.
 
 ## Health check
 

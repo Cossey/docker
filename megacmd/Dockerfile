@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:buster-slim
 ARG TARGETPLATFORM
 
 LABEL maintainer="stewart.cossey@gmail.com"
@@ -7,7 +7,7 @@ RUN apt-get update && \
     apt-get install curl gnupg2 -y && \
     echo path-include /usr/share/doc/megacmd/* > /etc/dpkg/dpkg.cfg.d/docker
 
-ADD mc.sh /
+ADD /megacmd/mc.sh /
 
 RUN bash -c "/mc.sh $TARGETPLATFORM" && \
     apt install ./megacmd.deb -y && \
@@ -16,7 +16,8 @@ RUN bash -c "/mc.sh $TARGETPLATFORM" && \
     apt-get remove -y curl && \
     apt-get clean
 
-COPY *.sh /
+COPY /megacmd/entrypoint.sh /
+COPY /library.sh /
 
 ENTRYPOINT bash ./entrypoint.sh
 CMD /bin/bash

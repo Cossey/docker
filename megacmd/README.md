@@ -62,11 +62,5 @@ You will see the session secret in the output.
 
 ## Building this Image
 
-The environment variable `DOCKER_HUB_PROFILE` must be set before you can build using the powershell script as this specifies the docker hub profile to build the image for.
-
-```
-.\build <tag>
-```
-`<tag>` is the tag to apply to the build.
-
-_The above command uses PowerShell and `buildx` to create the image._
+Use the [unified build tool](/README.md#building-images).
+There are no additional parameters to configure.

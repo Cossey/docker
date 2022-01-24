@@ -1,5 +1,5 @@
 #!/bin/bash
-# Function definitions used in the entrypoint file.
+# Common entrypoint function library.
 
 # Environment variable reading function
 # The function enables reading environment variable from file.

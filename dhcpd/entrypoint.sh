@@ -64,9 +64,10 @@ if [ -n "$IFACE" ]; then
         chown dhcpd:dhcpd "$data_dir/dhcpd.leases~"
     fi
 
-    container_id=$(grep docker /proc/self/cgroup | sort -n | head -n 1 | cut -d: -f3 | cut -d/ -f3)
+    container_id=$(grep "docker\|kubepods" /proc/self/cgroup | sort -n | head -n 1 | cut -d: -f3 | cut -d/ -f3)
     if perl -e '($id,$name)=@ARGV;$short=substr $id,0,length $name;exit 1 if $name ne $short;exit 0' $container_id $HOSTNAME; then
-        echo "You must add the 'docker run' option '--net=host' if you want to provide DHCP service to the host network."
+        echo "You must configure your container to run on the host network.  For docker, add the '--net=host',"
+	echo "for kubernetes, add the 'hostNetwork: true' to your pod configuration."
     fi
 
     $run /usr/sbin/dhcpd -4 -f -d --no-pid -cf "$data_dir/dhcpd.conf" -lf "$data_dir/dhcpd.leases" $IFACE

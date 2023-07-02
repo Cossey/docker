@@ -8,8 +8,8 @@ file_env "INTERVAL" 0
 
 file_env "PATH1"
 file_env "OUTPUTPATH" "/output"
-file_env "COMPRESS"
 file_env "OUTPUTFILE" "backup.tar.gz"
+file_env "POSTSCRIPT"
 file_env "TEMPPATH" "/temp"
 file_env "BEGIN" dfmt=%H%M
 
@@ -65,11 +65,22 @@ while :; do
 		log "-----------------------------------"
 		TIMEFORMAT=$(log "Completed in %R seconds")
 	}
-	log "Compressing to file..." 
+	if [ -f "$OUTPUTPATH/$OUTPUTFILE" ]; then
+		log "Deleting old backup"
+		rm $OUTPUTPATH/$OUTPUTFILE
+	fi 
+	log "Compressing to file" 
 	tar -zcf $OUTPUTPATH/$OUTPUTFILE *
-	log "Cleaning temp folder..."
+	log "Cleaning temp folder"
 	cd ..
 	rm -rf $TEMPPATH
+
+	if [ -n "$POSTSCRIPT" ]; then
+		log "Running post script"
+		export OUTPUTPATH
+		export OUTPUTFILE
+		source $POSTSCRIPT
+	fi
 
 	log "-----------------------------------"
 	if [ $INTERVAL -eq 0 ]; then

@@ -1,7 +1,9 @@
 # File Backup Container
 
 This container will automatically backup a set of files at the specified interval.
-Will output how long each download and cycle takes to complete and put into a single tar file.
+Will output how long each copy and cycle takes to complete and will put copied files into a single tar file.
+
+> Everytime this executes the old backup filename specified will be deleted.
 
 ## Supported Platforms
 
@@ -25,6 +27,7 @@ Will output how long each download and cycle takes to complete and put into a si
 | RECURSIVE  | boolean | Recurse subfolders when copying.                                       |
 | OUTPUTFILE | string  | The output compressed file.                                            |
 | TEMPPATH   | string  | The temporary folder to process and compress all files/folders.        |
+| POSTSCRIPT | string  | Will run a script when the compress task has completed.                |
 | **PATH1**  | string  | The path of the file or folder to backup.                              |
 | PATH2      | string  | The path of the file to folder to backup.                              |
 | DEST1      | string  | The destination folder of the file or folder to backup.                |
@@ -34,6 +37,11 @@ You can provide multiple files or destinations using `PATH1`, `DEST1`, `PATH2`, 
 `DEST` are optional and if not provided will copy to the root directory of the tar archive.
 
 > You can suffix  `_FILE` to the end of any environment variable to set the variable from a file (ie `PATH1_FILE`).
+
+## Post Script
+
+You can run a script after the compression of files has taken place to do further actions.
+The script will have both `OUTPUTPATH` and `OUTPUTFILE` environment variables passed to it so you can do further processing.
 
 ## Building this Image
 

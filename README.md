@@ -18,8 +18,8 @@ _You're welcome!_**
 
 ## Building Images
 
-Building of the images is done via the unified build tool.
-Located in the repository root, the build tool `build.ps1` can build the images as required.
+You can build them using the `build.ps1` in their folder or for packages marked as UBT, building of the images is done via the unified build tool.
+Located in the repository root, the UBT `build.ps1` can build all compatible packages.
 
 The environment variable `DOCKER_HUB_PROFILE` must be set before you can build as this specifies the docker hub profile to build the image for.
 
@@ -87,6 +87,12 @@ megacmd with some convenience functions to help with backing up files.
 [Readme](soxplayer/README.md) | [BSD 3-Clause](soxplayer/LICENCE) | UBT
 
 Runs sox player in a container with a simple HTTP web API to play/stop audio on demand.
+
+### [File Backup](filebackup/)
+
+[Readme](filebackup/README.md) | [BSD 3-Clause](filebackup/LICENCE) | UBT
+
+A linux container with a script to update files at set intervals with support for many platforms.
 
 ### [File Updater](fileupdater/)
 

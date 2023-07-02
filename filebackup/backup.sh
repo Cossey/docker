@@ -28,7 +28,7 @@ if [ ! -d "$OUTPUTPATH" ]; then
 	log "Creating output path $OUTPUTPATH"
 	mkdir -p "$OUTPUTPATH"
 fi
-cd $OUTPUTPATH
+cd $TEMPPATH
 
 if [ "$RECURSIVE" = "true" ]; then
 	CPARA=(-R)
@@ -70,7 +70,7 @@ while :; do
 	log "Moving to output path..."
 	mv $OUTPUTFILE $OUTPUTPATH
 	log "Cleaning temp folder..."
-	rm -r -d *
+	rm -rf *
 
 	log "-----------------------------------"
 	if [ $INTERVAL -eq 0 ]; then

@@ -1,7 +1,7 @@
 # File Backup Container
 
 This container will automatically backup a set of files at the specified interval.
-Will output how long each download and cycle takes to complete and compress into a tar file.
+Will output how long each download and cycle takes to complete and put into a single tar file.
 
 ## Supported Platforms
 
@@ -27,8 +27,11 @@ Will output how long each download and cycle takes to complete and compress into
 | TEMPPATH   | string  | The temporary folder to process and compress all files/folders.        |
 | **PATH1**  | string  | The path of the file or folder to backup.                              |
 | PATH2      | string  | The path of the file to folder to backup.                              |
+| DEST1      | string  | The destination folder of the file or folder to backup.                |
+| DEST2      | string  | The destination folder of the file or folder to backup.                |
 
-You can provide multiple files using `PATH1`, `PATH2`, `PATH3` and so on.
+You can provide multiple files or destinations using `PATH1`, `DEST1`, `PATH2`, `DEST2` and so on.
+`DEST` are optional and if not provided will copy to the root directory of the tar archive.
 
 > You can suffix  `_FILE` to the end of any environment variable to set the variable from a file (ie `PATH1_FILE`).
 

@@ -1,4 +1,3 @@
-#!/bin/bash
 # Backup Tool
 # Copyright © 2023 Stewart Cossey
 # Version: 1.0
@@ -9,7 +8,7 @@ file_env "INTERVAL" 0
 
 file_env "PATH1"
 file_env "OUTPUTPATH" "/output"
-file_env "RECURSIVE" "true"
+file_env "COMPRESS"
 file_env "OUTPUTFILE" "backup.tar.gz"
 file_env "TEMPPATH" "/temp"
 file_env "BEGIN" dfmt=%H%M
@@ -23,16 +22,10 @@ if [ ! -d "$TEMPPATH" ]; then
 	log "Creating temp path $TEMPPATH"
 	mkdir -p "$TEMPPATH"
 fi
-
+cd $TEMPPATH
 if [ ! -d "$OUTPUTPATH" ]; then
 	log "Creating output path $OUTPUTPATH"
 	mkdir -p "$OUTPUTPATH"
-fi
-cd $TEMPPATH
-
-if [ "$RECURSIVE" = "true" ]; then
-	CPARA=(-R)
-	log "Recursive"
 fi
 
 if [ -z "$BEGIN" ]; then
@@ -49,7 +42,9 @@ while :; do
 		c=1
 		while :; do
 			PATHVAL=PATH$c
+			DESTVAL=DEST$c
 			file_env $PATHVAL
+			file_env $DESTVAL
 
 			if [ -z "${!PATHVAL}" ]; then
 				break
@@ -57,20 +52,24 @@ while :; do
 
 			log "Copy ${!PATHVAL}"
 			time {
-				cp $CPARA $PATHVAL $TEMPPATH
+				if [ -z "${!DESTVAL}" ]; then
+					cp -R ${!PATHVAL} .
+				else
+					mkdir -p "${!DESTVAL}"
+					cp -R ${!PATHVAL} ${!DESTVAL}
+				fi
 			}
 
 			((c++))
 		done
 		log "-----------------------------------"
-		TIMEFORMAT=$(log "Cycle took %R seconds to complete")
+		TIMEFORMAT=$(log "Completed in %R seconds")
 	}
 	log "Compressing to file..." 
-	tar -zcvf $OUTPUTFILE *
-	log "Moving to output path..."
-	mv $OUTPUTFILE $OUTPUTPATH
+	tar -zcf $OUTPUTPATH/$OUTPUTFILE *
 	log "Cleaning temp folder..."
-	rm -rf *
+	cd ..
+	rm -rf $TEMPPATH
 
 	log "-----------------------------------"
 	if [ $INTERVAL -eq 0 ]; then

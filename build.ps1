@@ -6,8 +6,13 @@ param (
 )
 
 Write-Host "Unified Build Tool"
-Write-Host "Copyright © 2022 Stewart Cossey"
+Write-Host "Copyright © 2023 Stewart Cossey"
 Write-Host "==============================="
+
+if ([string]::IsNullOrWhiteSpace(${env:DOCKER_HUB_PROFILE})) {
+    Write-Host "Environment variable DOCKER_HUB_PROFILE must be set."
+    exit
+}
 
 $tag = "${env:DOCKER_HUB_PROFILE}/$image"
 

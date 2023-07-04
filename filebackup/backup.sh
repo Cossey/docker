@@ -36,7 +36,7 @@ if [ -z "$BEGIN" ]; then
 fi
 log "-----------------------------------"
 while :; do
-	
+	log "Starting"
 	time {
 		TIMEFORMAT=$(log "Completed in %R seconds")
 		c=1
@@ -72,8 +72,7 @@ while :; do
 	log "Compressing to file" 
 	tar -zcf $OUTPUTPATH/$OUTPUTFILE *
 	log "Cleaning temp folder"
-	cd ..
-	rm -rf $TEMPPATH
+	rm -rf *
 
 	if [ -n "$POSTSCRIPT" ]; then
 		log "Running post script"
@@ -82,10 +81,12 @@ while :; do
 		source $POSTSCRIPT
 	fi
 
-	log "-----------------------------------"
 	if [ $INTERVAL -eq 0 ]; then
 		break
 	else
+		log "Waiting for ${INTERVAL} minutes..."
+		log "-----------------------------------"
 		sleep "${INTERVAL}m"
 	fi
+
 done

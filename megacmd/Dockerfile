@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 ARG TARGETPLATFORM
 
 LABEL maintainer="stewart.cossey@gmail.com"

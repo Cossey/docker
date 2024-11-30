@@ -10,14 +10,15 @@ This is a container for the megacmd tool. Designed with convenience functions, i
 
 ## Container Configuration
 
-| Name     | Description                                                                                                 |
-| -------- | ----------------------------------------------------------------------------------------------------------- |
-| USERNAME | The mega account username. *Required if SESSION not supplied.*                                              |
-| PASSWORD | The mega account password. *Required if SESSION not supplied.*                                              |
-| SESSION  | The mega login session. *Required if USERNAME and PASSWORD not supplied.*                                   |
+| Name     | Description                                                                                                  |
+| -------- | ------------------------------------------------------------------------------------------------------------ |
+| USERNAME | The mega account username. *Required if SESSION not supplied.*                                               |
+| PASSWORD | The mega account password. *Required if SESSION not supplied.*                                               |
+| SESSION  | The mega login session. *Required if USERNAME and PASSWORD not supplied.*                                    |
 | MEGACMD  | The command to pass to the megacmd program. You don't need to prefix the `mega-` to the command. *Required.* |
-| INTERVAL | The time in minutes to repeat the command. Leave blank or set to 0 exit immediately.                        |
-| BEGIN    | The time in HHMM UTC to first run the command. If not set will run immediately.                             |
+| INTERVAL | The time in minutes to repeat the command. Leave blank or set to 0 exit immediately.                         |
+| BEGIN    | The time in HHMM UTC to first run the command. If not set will run immediately.                              |
+| DV       | Run delete versions command after each MEGACMD with the supplied path.                                       |
 
 > You can add `_FILE` to the end of any environment variable to set the variable from a file. Typically used for secrets.
 

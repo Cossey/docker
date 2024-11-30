@@ -71,6 +71,12 @@ while :; do
     $MEGACMD
   fi
 
+  # run delete versions if DV set
+  if [[ -n "$DV" ]]; then
+    echo "Running delete versions..."
+    mega-deleteversions -f $DV
+  fi
+
   if [[ -z "$INTERVAL" ]] || [ $INTERVAL -eq 0 ]; then
     exit $?
   else
